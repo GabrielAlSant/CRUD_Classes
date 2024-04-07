@@ -13,6 +13,7 @@ class Aluno extends ORM{
   constructor(){
     super()
 
+    this.nmatricula = 1
     this.alunos = []
     
     this.#nome = undefined
@@ -29,7 +30,7 @@ class Aluno extends ORM{
 
     let obj = {
       nome:nome,
-      matricula: Aluno.nmatricula++,
+      matricula: this.nmatricula++,
       endereco:endereco,
       data_nascimento:dataNascimento,
       cpf:cpf,
@@ -41,18 +42,20 @@ class Aluno extends ORM{
     this.alunos.push(obj)
   }
 
-   update(matricula, nome, endereco, cpf, curso_andamento){
+   update(matricula, nome, endereco, cpf, curso_andamento, telefone){
 
     let encontrado = false
      
-     for (let i = 0; i < this.Aluno.length; i++){
+     for (let i = 0; i < this.alunos.length; i++){
 
-       if(matricula == alunos[i].#matricula){
+       if(matricula == this.alunos[i].matricula){
 
-         this.#nome = nome
-         this.#endereco = endereco
-         this.#cpf = cpf
-         this.#curso_andamento = curso_andamento
+        this.alunos[i].nome = nome
+        this.alunos[i].endereco = endereco
+        this.alunos[i].cpf = cpf
+        this.alunos[i].curso_andamento = curso_andamento
+        this.alunos[i].telefone = telefone
+         
 
          encontrado = true
          break
@@ -76,7 +79,7 @@ delete(matricula){
   
   for(let i = 0 ; i< this.alunos.length;i++){
 
-    if(matricula == this.alunos[i].#matricula){
+    if(matricula == this.alunos[i].matricula){
       encontrado = true
       this.alunos.splice(i, 1)
       break
@@ -119,17 +122,5 @@ delete(matricula){
   }
   }
 }
-
-Aluno.nmatricula = 0;
-
-const alunosIf = new Aluno();
-
-alunosIf.create("José", "Rua A", "12/02/1980", "987654321","454.646.456-52", "567464", "Informática")
-
-alunosIf.create("Maria", "Rua B", "12/02/1980", "987654321","454.646.456-52", "567464", "Informática")
-
-console.log(alunosIf.all);
-console.log(alunosIf.one(1))
-
 
 export default Aluno; 
